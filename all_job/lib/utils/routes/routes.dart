@@ -8,7 +8,7 @@ class Routes {
   static const String onboarding = '/onboarding';
 
   static List<GetPage<dynamic>> getPages = [
-    GetPage(name: root, page: () => const RoootScreen()),
+    GetPage(name: root, page: () => const RootScreen()),
     GetPage(name: onboarding, page: () => const OnboardingScreen())
   ];
 }
