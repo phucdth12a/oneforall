@@ -27,7 +27,7 @@ class RootScreen extends GetView<RootViewModel> {
             currentIndex: 0,
             dotIndicatorColor: Colors.transparent,
             unselectedItemColor: Vx.hexToColor('#787880'),
-            backgroundColor: Vx.hexToColor('#F6F7FA').withOpacity(0.8),
+            backgroundColor: Vx.hexToColor('#F6F7FA'),
             onTap: (index) {
               controller.selectedIndex.value = index;
             },

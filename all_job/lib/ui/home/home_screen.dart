@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../utils/view/avatar_view.dart';
 import 'home_view_model.dart';
 
 class HomeScreen extends GetView<HomeViewModel> {
@@ -16,15 +17,12 @@ class HomeScreen extends GetView<HomeViewModel> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        centerTitle: false,
         title: HStack([
-          ClipOval(
-            child: CachedNetworkImage(
-              imageUrl:
-                  'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
-              fit: BoxFit.fill,
-              width: 42,
-              height: 42,
-            ),
+          const AvatarView(
+            size: 42,
+            url:
+                'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
           ),
           const WidthBox(9),
           VStack([
@@ -105,6 +103,288 @@ class HomeScreen extends GetView<HomeViewModel> {
             ),
           ]),
         ).px(16),
+        const HeightBox(16),
+        SizedBox(
+          height: 44,
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            scrollDirection: Axis.horizontal,
+            children: [
+              Container(
+                height: 36,
+                width: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Vx.hexToColor('#007AFF').withOpacity(0.3),
+                ),
+                child: const Icon(
+                  Icons.menu_outlined,
+                  size: 22,
+                  color: Colors.black,
+                ),
+              ),
+              Container(
+                height: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Vx.hexToColor('#007AFF').withOpacity(0.3),
+                ),
+                child: HStack([
+                  'Designer'.text.fontFamily(kFontSFProText).size(12).make(),
+                  const WidthBox(8),
+                  const Icon(
+                    Icons.close,
+                    size: 16,
+                    color: Colors.black,
+                  )
+                ]).centered().px(16),
+              ).pOnly(left: 16),
+              Container(
+                height: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    width: 1,
+                    color: Vx.hexToColor('#3C3C43').withOpacity(0.29),
+                  ),
+                ),
+                child: 'Location'
+                    .text
+                    .fontFamily(kFontSFProText)
+                    .size(12)
+                    .color(Vx.hexToColor('#3C3C43').withOpacity(0.6))
+                    .make()
+                    .centered()
+                    .px(16),
+              ).pOnly(left: 16),
+              Container(
+                height: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Vx.hexToColor('#007AFF').withOpacity(0.3),
+                ),
+                child: HStack([
+                  'Remote'.text.fontFamily(kFontSFProText).size(12).make(),
+                  const WidthBox(8),
+                  const Icon(
+                    Icons.close,
+                    size: 16,
+                    color: Colors.black,
+                  )
+                ]).centered().px(16),
+              ).pOnly(left: 16),
+              Container(
+                height: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    width: 1,
+                    color: Vx.hexToColor('#3C3C43').withOpacity(0.29),
+                  ),
+                ),
+                child: 'Company'
+                    .text
+                    .fontFamily(kFontSFProText)
+                    .size(12)
+                    .color(Vx.hexToColor('#3C3C43').withOpacity(0.6))
+                    .make()
+                    .centered()
+                    .px(16),
+              ).pOnly(left: 16),
+            ],
+          ),
+        ),
+        const HeightBox(10),
+        Expanded(
+            child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: VStack([
+            HStack([
+              'Recommended for you'
+                  .text
+                  .fontFamily(kFontSFProText)
+                  .fontWeight(FontWeight.w600)
+                  .make(),
+              const Spacer(),
+              TextButton(
+                onPressed: () {},
+                child: 'See all'
+                    .text
+                    .fontFamily(kFontSFProText)
+                    .fontWeight(FontWeight.w600)
+                    .make(),
+              ),
+            ]).pOnly(left: 16, right: 6),
+            SizedBox(
+              height: 221,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 140,
+                    height: 221,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Vx.randomColor.withOpacity(0.08),
+                    ),
+                    child: VStack([
+                      const AvatarView(
+                        size: 53,
+                        url:
+                            'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
+                      ),
+                      'UX Designer'
+                          .text
+                          .fontFamily(kFontSFProText)
+                          .fontWeight(FontWeight.w600)
+                          .size(17)
+                          .maxLines(1)
+                          .make()
+                          .pOnly(top: 8),
+                      'Amazon'
+                          .text
+                          .fontFamily(kFontSFProText)
+                          .size(15)
+                          .maxLines(1)
+                          .make()
+                          .pOnly(top: 4),
+                      'Seattle, US (Remote)'
+                          .text
+                          .fontFamily(kFontSFProText)
+                          .size(15)
+                          .color(Vx.hexToColor('#3C3C43').withOpacity(0.6))
+                          .lineHeight(1.5)
+                          .maxLines(2)
+                          .make()
+                          .pOnly(top: 4),
+                      const Spacer(),
+                      HStack([
+                        '1 day ago on '
+                            .text
+                            .fontFamily(kFontSFProText)
+                            .color(Vx.hexToColor('#3C3C43').withOpacity(0.6))
+                            .size(11)
+                            .make(),
+                        Image.asset(
+                          'assets/images/Linkedin.png',
+                          width: 48,
+                          height: 12,
+                          fit: BoxFit.cover,
+                        ),
+                      ])
+                    ]).p8(),
+                  ).pOnly(left: 16);
+                },
+              ),
+            ),
+            const HeightBox(20),
+            HStack([
+              'What’s new'
+                  .text
+                  .fontFamily(kFontSFProText)
+                  .fontWeight(FontWeight.w600)
+                  .make(),
+              const Spacer(),
+              TextButton(
+                onPressed: () {},
+                child: 'See all'
+                    .text
+                    .fontFamily(kFontSFProText)
+                    .fontWeight(FontWeight.w600)
+                    .make(),
+              ),
+            ]).pOnly(left: 16, right: 6),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 40,
+              itemBuilder: (context, index) {
+                return ZStack([
+                  VStack([
+                    Container(
+                      height: 1,
+                      decoration: BoxDecoration(
+                          color: Vx.hexToColor('#3C3C43').withOpacity(0.29),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: const Offset(0, 0.3),
+                              blurRadius: 0,
+                              spreadRadius: 0,
+                              color: Colors.black.withOpacity(.09),
+                            )
+                          ]),
+                    ),
+                    HStack(
+                      [
+                        const AvatarView(
+                          size: 53,
+                          url:
+                              'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
+                        ),
+                        Expanded(
+                          child: VStack([
+                            'UX Designer'
+                                .text
+                                .fontFamily(kFontSFProText)
+                                .fontWeight(FontWeight.w600)
+                                .size(17)
+                                .maxLines(1)
+                                .make()
+                                .pOnly(top: 8),
+                            'Amazon'
+                                .text
+                                .fontFamily(kFontSFProText)
+                                .size(15)
+                                .maxLines(1)
+                                .make(),
+                            'Seattle, US (Remote)'
+                                .text
+                                .fontFamily(kFontSFProText)
+                                .size(15)
+                                .color(
+                                    Vx.hexToColor('#3C3C43').withOpacity(0.6))
+                                .maxLines(1)
+                                .make(),
+                            HStack([
+                              '1 day ago on '
+                                  .text
+                                  .fontFamily(kFontSFProText)
+                                  .color(
+                                      Vx.hexToColor('#3C3C43').withOpacity(0.6))
+                                  .size(11)
+                                  .make(),
+                              Image.asset(
+                                'assets/images/Linkedin.png',
+                                width: 48,
+                                height: 12,
+                                fit: BoxFit.cover,
+                              ),
+                            ]).pOnly(top: 13)
+                          ]).pOnly(left: 15),
+                        ),
+                        const Icon(
+                          Icons.bookmark_border,
+                        ),
+                      ],
+                      crossAlignment: CrossAxisAlignment.start,
+                    ).pOnly(top: 10)
+                  ]).px(16).pOnly(bottom: 20),
+                  Positioned(
+                    right: 16,
+                    child: Icon(
+                      Icons.navigate_next,
+                      size: 24,
+                      color: Vx.hexToColor('#3C3C43').withOpacity(0.29),
+                    ),
+                  )
+                ], alignment: AlignmentDirectional.center);
+              },
+            ),
+          ]),
+        )),
       ]),
     );
   }
