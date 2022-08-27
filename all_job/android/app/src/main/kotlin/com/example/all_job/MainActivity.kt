@@ -1,4 +1,4 @@
-package com.example.all_job
+package regisappvhome.allJob
 
 import io.flutter.embedding.android.FlutterActivity
 

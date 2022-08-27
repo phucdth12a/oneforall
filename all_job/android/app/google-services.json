@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "329082582863",
+    "project_id": "alljob-4116a",
+    "storage_bucket": "alljob-4116a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329082582863:android:4a0290269204f2bd12373a",
+        "android_client_info": {
+          "package_name": "regisappvhome.allJob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329082582863-2c4q26qe3ljdmt0obv4tat3egdmf6vvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ5ZHWB-K5oazirf_xBmCwk2yRQYwx2p8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329082582863-2c4q26qe3ljdmt0obv4tat3egdmf6vvd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "329082582863-9h7trt4aiffiraibj7prptumt0065ace.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.regisappvhome.allJob"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

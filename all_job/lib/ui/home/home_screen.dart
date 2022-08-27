@@ -1,18 +1,42 @@
 import 'package:all_job/utils/constant/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../utils/view/avatar_view.dart';
+import '../../utils/view/sliver_refresh_indicator.dart';
 import 'home_view_model.dart';
+import 'job_item.dart';
 
-class HomeScreen extends GetView<HomeViewModel> {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
+  final controller = HomeViewModel();
+  final tag = 'HomeScreen';
+
+  @override
+  void initState() {
+    Get.put(controller, tag: tag);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<HomeViewModel>(tag: tag);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Get.put(HomeViewModel());
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -196,136 +220,51 @@ class HomeScreen extends GetView<HomeViewModel> {
         ),
         const HeightBox(10),
         Expanded(
-            child: SingleChildScrollView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          child: VStack([
-            HStack([
-              'Recommended for you'
-                  .text
-                  .fontFamily(kFontSFProText)
-                  .fontWeight(FontWeight.w600)
-                  .make(),
-              const Spacer(),
-              TextButton(
-                onPressed: () {},
-                child: 'See all'
-                    .text
-                    .fontFamily(kFontSFProText)
-                    .fontWeight(FontWeight.w600)
-                    .make(),
-              ),
-            ]).pOnly(left: 16, right: 6),
-            SizedBox(
-              height: 221,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 140,
-                    height: 221,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Vx.randomColor.withOpacity(0.08),
-                    ),
-                    child: VStack([
-                      const AvatarView(
-                        size: 53,
-                        url:
-                            'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
-                      ),
-                      'UX Designer'
+          child: CustomScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              slivers: [
+                CupertinoSliverRefreshControl(
+                    builder: Theme.of(context).platform == TargetPlatform.iOS
+                        ? buildAppleRefreshIndicator
+                        : buildAndroidRefreshIndicator,
+                    onRefresh: controller.onRefresh),
+                VStack([
+                  HStack([
+                    'Recommended for you'
+                        .text
+                        .fontFamily(kFontSFProText)
+                        .fontWeight(FontWeight.w600)
+                        .make(),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {},
+                      child: 'See all'
                           .text
                           .fontFamily(kFontSFProText)
                           .fontWeight(FontWeight.w600)
-                          .size(17)
-                          .maxLines(1)
-                          .make()
-                          .pOnly(top: 8),
-                      'Amazon'
-                          .text
-                          .fontFamily(kFontSFProText)
-                          .size(15)
-                          .maxLines(1)
-                          .make()
-                          .pOnly(top: 4),
-                      'Seattle, US (Remote)'
-                          .text
-                          .fontFamily(kFontSFProText)
-                          .size(15)
-                          .color(Vx.hexToColor('#3C3C43').withOpacity(0.6))
-                          .lineHeight(1.5)
-                          .maxLines(2)
-                          .make()
-                          .pOnly(top: 4),
-                      const Spacer(),
-                      HStack([
-                        '1 day ago on '
-                            .text
-                            .fontFamily(kFontSFProText)
-                            .color(Vx.hexToColor('#3C3C43').withOpacity(0.6))
-                            .size(11)
-                            .make(),
-                        Image.asset(
-                          'assets/images/Linkedin.png',
-                          width: 48,
-                          height: 12,
-                          fit: BoxFit.cover,
-                        ),
-                      ])
-                    ]).p8(),
-                  ).pOnly(left: 16);
-                },
-              ),
-            ),
-            const HeightBox(20),
-            HStack([
-              'What’s new'
-                  .text
-                  .fontFamily(kFontSFProText)
-                  .fontWeight(FontWeight.w600)
-                  .make(),
-              const Spacer(),
-              TextButton(
-                onPressed: () {},
-                child: 'See all'
-                    .text
-                    .fontFamily(kFontSFProText)
-                    .fontWeight(FontWeight.w600)
-                    .make(),
-              ),
-            ]).pOnly(left: 16, right: 6),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 40,
-              itemBuilder: (context, index) {
-                return ZStack([
-                  VStack([
-                    Container(
-                      height: 1,
-                      decoration: BoxDecoration(
-                          color: Vx.hexToColor('#3C3C43').withOpacity(0.29),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 0.3),
-                              blurRadius: 0,
-                              spreadRadius: 0,
-                              color: Colors.black.withOpacity(.09),
-                            )
-                          ]),
+                          .make(),
                     ),
-                    HStack(
-                      [
-                        const AvatarView(
-                          size: 53,
-                          url:
-                              'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
-                        ),
-                        Expanded(
+                  ]).pOnly(left: 16, right: 6),
+                  SizedBox(
+                    height: 221,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.only(right: 16),
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          width: 140,
+                          height: 221,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Vx.randomColor.withOpacity(0.08),
+                          ),
                           child: VStack([
+                            const AvatarView(
+                              size: 53,
+                              url:
+                                  'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
+                            ),
                             'UX Designer'
                                 .text
                                 .fontFamily(kFontSFProText)
@@ -339,15 +278,19 @@ class HomeScreen extends GetView<HomeViewModel> {
                                 .fontFamily(kFontSFProText)
                                 .size(15)
                                 .maxLines(1)
-                                .make(),
+                                .make()
+                                .pOnly(top: 4),
                             'Seattle, US (Remote)'
                                 .text
                                 .fontFamily(kFontSFProText)
                                 .size(15)
                                 .color(
                                     Vx.hexToColor('#3C3C43').withOpacity(0.6))
-                                .maxLines(1)
-                                .make(),
+                                .lineHeight(1.5)
+                                .maxLines(2)
+                                .make()
+                                .pOnly(top: 4),
+                            const Spacer(),
                             HStack([
                               '1 day ago on '
                                   .text
@@ -362,30 +305,47 @@ class HomeScreen extends GetView<HomeViewModel> {
                                 height: 12,
                                 fit: BoxFit.cover,
                               ),
-                            ]).pOnly(top: 13)
-                          ]).pOnly(left: 15),
-                        ),
-                        const Icon(
-                          Icons.bookmark_border,
-                        ),
-                      ],
-                      crossAlignment: CrossAxisAlignment.start,
-                    ).pOnly(top: 10)
-                  ]).px(16).pOnly(bottom: 20),
-                  Positioned(
-                    right: 16,
-                    child: Icon(
-                      Icons.navigate_next,
-                      size: 24,
-                      color: Vx.hexToColor('#3C3C43').withOpacity(0.29),
+                            ])
+                          ]).p8(),
+                        ).pOnly(left: 16);
+                      },
+                    ),
+                  ),
+                  const HeightBox(20),
+                  HStack([
+                    'What’s new'
+                        .text
+                        .fontFamily(kFontSFProText)
+                        .fontWeight(FontWeight.w600)
+                        .make(),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {},
+                      child: 'See all'
+                          .text
+                          .fontFamily(kFontSFProText)
+                          .fontWeight(FontWeight.w600)
+                          .make(),
+                    ),
+                  ]).pOnly(left: 16, right: 6),
+                  Obx(
+                    () => ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.listJob.length,
+                      itemBuilder: (context, index) {
+                        return JobItem(job: controller.listJob[index]);
+                      },
                     ),
                   )
-                ], alignment: AlignmentDirectional.center);
-              },
-            ),
-          ]),
-        )),
+                ]).sliverBoxAdapter(),
+              ]),
+        ),
       ]),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

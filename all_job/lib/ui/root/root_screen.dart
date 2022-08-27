@@ -1,8 +1,5 @@
-import 'package:all_job/ui/onboarding/onboarding_screen.dart';
-import 'package:all_job/utils/routes/routes.dart';
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -17,7 +14,12 @@ class RootScreen extends GetView<RootViewModel> {
     return Obx(
       () => Scaffold(
         extendBody: true,
-        body: controller.homeScreen,
+        body: PageView(
+          controller: controller.pageController,
+          onPageChanged: (index) {},
+          physics: const NeverScrollableScrollPhysics(),
+          children: controller.screens,
+        ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: DotNavigationBar(
@@ -30,6 +32,7 @@ class RootScreen extends GetView<RootViewModel> {
             backgroundColor: Vx.hexToColor('#F6F7FA'),
             onTap: (index) {
               controller.selectedIndex.value = index;
+              controller.pageController.jumpToPage(index);
             },
             items: [
               DotNavigationBarItem(

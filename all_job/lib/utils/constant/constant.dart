@@ -9,3 +9,6 @@ const kFontSFMonoItalic = 'SF Mono Italic';
 
 // Colors
 const kColor60606706 = Color.fromRGBO(60, 60, 67, 0.6);
+
+// Constant
+const kVersion = 1;
