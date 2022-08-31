@@ -20,6 +20,7 @@ JobModel _$JobModelFromJson(Map json) => JobModel(
           const LocalDateTimeConverter().fromJson(json['createdAt'] as String?),
       updatedAt:
           const LocalDateTimeConverter().fromJson(json['updatedAt'] as String?),
+      avt: json['avt'] as String?,
     );
 
 Map<String, dynamic> _$JobModelToJson(JobModel instance) {
@@ -44,5 +45,6 @@ Map<String, dynamic> _$JobModelToJson(JobModel instance) {
       'createdAt', const LocalDateTimeConverter().toJson(instance.createdAt));
   writeNotNull(
       'updatedAt', const LocalDateTimeConverter().toJson(instance.updatedAt));
+  writeNotNull('avt', instance.avt);
   return val;
 }

@@ -41,6 +41,9 @@ class JobModel {
   @JsonKey(name: "updatedAt")
   DateTime? updatedAt;
 
+  @JsonKey(name: "avt")
+  String? avt;
+
   JobModel({
     this.id,
     this.title,
@@ -52,6 +55,7 @@ class JobModel {
     this.release,
     this.createdAt,
     this.updatedAt,
+    this.avt,
   });
 
   factory JobModel.fromJson(Map<String, dynamic> json) =>
