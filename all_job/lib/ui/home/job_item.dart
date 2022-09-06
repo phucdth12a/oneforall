@@ -34,18 +34,12 @@ class JobItem extends StatelessWidget {
           ),
           HStack(
             [
-              const AvatarView(
+              AvatarView(
                 size: 53,
-                url:
-                    'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
+                url: job.avt ?? '',
               ),
               Expanded(
                 child: VStack([
-                  // (job.title ?? '')
-                  // Text(
-                  //   job.title ?? '',
-                  //   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
-                  // ),
                   (job.title ?? '')
                       .text
                       .fontFamily(kFontSFProText)
@@ -102,6 +96,6 @@ class JobItem extends StatelessWidget {
           ),
         )
       ], alignment: AlignmentDirectional.center),
-    ).onTap(() => Get.toNamed(Routes.detail));
+    ).onTap(() => Get.toNamed(Routes.detail, arguments: job));
   }
 }

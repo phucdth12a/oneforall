@@ -1,10 +1,11 @@
 import 'package:all_job/ui/saved/saved_view_model.dart';
 import 'package:all_job/utils/constant/constant.dart';
-import 'package:all_job/utils/model/job.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../utils/view/sliver_refresh_indicator.dart';
 import '../home/job_item.dart';
 
 class SavedScreen extends StatefulWidget {
@@ -53,11 +54,31 @@ class _SavedScreenState extends State<SavedScreen>
             .make()
             .pOnly(left: 16, bottom: 16),
         Expanded(
-          child: ListView.builder(
-            itemCount: 40,
-            itemBuilder: (context, index) {
-              return JobItem(job: JobModel());
-            },
+          child: CustomScrollView(
+            controller: controller.scrollController,
+            physics: const RefreshScrollPhysics(),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            slivers: [
+              CupertinoSliverRefreshControl(
+                builder: Theme.of(context).platform == TargetPlatform.iOS
+                    ? buildAppleRefreshIndicator
+                    : buildAndroidRefreshIndicator,
+                onRefresh: controller.onRefresh,
+              ),
+              Expanded(
+                child: SliverPadding(
+                  padding: const EdgeInsets.only(bottom: 120),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return JobItem(job: controller.listJob[index]);
+                      },
+                      childCount: controller.listJob.length,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ]),

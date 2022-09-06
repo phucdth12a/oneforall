@@ -42,7 +42,7 @@ class JobAPI extends API {
 
   Future<APIResponseList<JobModel>> listJobRecomends() async {
     Map<String, dynamic> data = {};
-    Response response = await getRequest('v1/services/recommentss', data);
+    Response response = await getRequest('v1/services/recomments', data);
 
     Map<String, dynamic> json = response.data;
 

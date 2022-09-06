@@ -1,10 +1,10 @@
 import 'package:all_job/utils/constant/constant.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../utils/routes/routes.dart';
 import '../../utils/view/avatar_view.dart';
 import '../../utils/view/sliver_refresh_indicator.dart';
 import 'home_view_model.dart';
@@ -227,68 +227,83 @@ class _HomeScreenState extends State<HomeScreen>
                   ]).pOnly(left: 16, right: 6),
                   SizedBox(
                     height: 221,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.only(right: 16),
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: 140,
-                          height: 221,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Vx.randomColor.withOpacity(0.08),
-                          ),
-                          child: VStack([
-                            const AvatarView(
-                              size: 53,
-                              url:
-                                  'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
+                    child: Obx(
+                      () => ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.only(right: 16),
+                        itemCount: controller.listRecomendJob.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: 140,
+                            height: 221,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Vx.randomColor.withOpacity(0.08),
                             ),
-                            'UX Designer'
-                                .text
-                                .fontFamily(kFontSFProText)
-                                .fontWeight(FontWeight.w600)
-                                .size(17)
-                                .maxLines(1)
-                                .make()
-                                .pOnly(top: 8),
-                            'Amazon'
-                                .text
-                                .fontFamily(kFontSFProText)
-                                .size(15)
-                                .maxLines(1)
-                                .make()
-                                .pOnly(top: 4),
-                            'Seattle, US (Remote)'
-                                .text
-                                .fontFamily(kFontSFProText)
-                                .size(15)
-                                .color(
-                                    Vx.hexToColor('#3C3C43').withOpacity(0.6))
-                                .lineHeight(1.5)
-                                .maxLines(2)
-                                .make()
-                                .pOnly(top: 4),
-                            const Spacer(),
-                            HStack([
-                              '1 day ago on '
-                                  .text
-                                  .fontFamily(kFontSFProText)
-                                  .color(
-                                      Vx.hexToColor('#3C3C43').withOpacity(0.6))
-                                  .size(11)
-                                  .make(),
-                              Image.asset(
-                                'assets/images/Linkedin.png',
-                                width: 48,
-                                height: 12,
-                                fit: BoxFit.cover,
+                            child: VStack([
+                              AvatarView(
+                                size: 53,
+                                url:
+                                    controller.listRecomendJob[index].avt ?? '',
                               ),
-                            ])
-                          ]).p8(),
-                        ).pOnly(left: 16);
-                      },
+                              Text(
+                                (controller.listRecomendJob[index].title ?? ''),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontFamily: kFontSFProDisplay,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 17,
+                                ),
+                              ).pOnly(top: 8),
+                              Text(
+                                controller.listRecomendJob[index].description ??
+                                    '',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontFamily: kFontSFProDisplay,
+                                  fontSize: 15,
+                                  height: 1.5,
+                                ),
+                              ).pOnly(top: 4),
+                              Text(
+                                (controller.listRecomendJob[index].tags ?? [])
+                                    .join(', '),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontFamily: kFontSFProText,
+                                  fontSize: 15,
+                                  color:
+                                      Vx.hexToColor('#3C3C43').withOpacity(0.6),
+                                  height: 1.5,
+                                ),
+                              ).pOnly(top: 4),
+                              const Spacer(),
+                              HStack([
+                                controller.listRecomendJob[index]
+                                    .getDate()
+                                    .text
+                                    .fontFamily(kFontSFProText)
+                                    .color(Vx.hexToColor('#3C3C43')
+                                        .withOpacity(0.6))
+                                    .size(11)
+                                    .make(),
+                                const Spacer(),
+                                Image.asset(
+                                  'assets/images/Linkedin.png',
+                                  width: 48,
+                                  height: 12,
+                                  fit: BoxFit.cover,
+                                ),
+                              ])
+                            ]).p8(),
+                          ).pOnly(left: 16).onTap(() => Get.toNamed(
+                              Routes.detail,
+                              arguments: controller.listRecomendJob[index]));
+                        },
+                      ),
                     ),
                   ),
                   const HeightBox(20),
@@ -322,6 +337,15 @@ class _HomeScreenState extends State<HomeScreen>
               ]),
         ),
       ]),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+            right: 16, bottom: Get.mediaQuery.viewPadding.bottom + 60),
+        child: FloatingActionButton(
+          onPressed: () => Get.toNamed(Routes.createJob),
+          backgroundColor: Colors.blue,
+          child: const Icon(Icons.add, size: 44),
+        ),
+      ),
     );
   }
 

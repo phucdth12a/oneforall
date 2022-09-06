@@ -60,6 +60,9 @@ class HomeViewModel extends GetxController {
   }
 
   getListJob(String search, bool force, {int offset = 0}) async {
+    if (isLoading) {
+      return;
+    }
     currentSearch = search;
     isLoading = true;
     if (offset == 0) {
@@ -70,7 +73,6 @@ class HomeViewModel extends GetxController {
         limit: 30,
         search: currentSearch,
         tags: listTagsSelected);
-    listJob.value = result.elements ?? [];
     List<JobModel> data = result.elements ?? [];
     listJob.addAll(data);
     canLoadMore = data.length == 30;

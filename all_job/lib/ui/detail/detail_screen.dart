@@ -43,27 +43,36 @@ class DetailScreen extends GetView<DetailViewModel> {
               Positioned(
                 left: 16,
                 bottom: 19,
+                right: 16,
                 child: HStack([
-                  const AvatarView(
+                  AvatarView(
                     size: 66,
-                    url:
-                        'https://images.unsplash.com/photo-1519865885898-a54a6f2c7eea?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=758&q=80',
+                    url: controller.job.avt ?? '',
                   ),
-                  VStack([
-                    'UX Designer'
-                        .text
-                        .fontWeight(FontWeight.w700)
-                        .size(28)
-                        .color(Colors.white)
-                        .make()
-                        .pOnly(bottom: 4),
-                    'Amazon'
-                        .text
-                        .fontWeight(FontWeight.w700)
-                        .size(22)
-                        .color(Colors.white)
-                        .make(),
-                  ]).pOnly(left: 16)
+                  Flexible(
+                    child: VStack([
+                      Text(
+                        controller.job.title ?? '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 28,
+                          color: Colors.white,
+                        ),
+                      ).pOnly(bottom: 4),
+                      Text(
+                        controller.job.description ?? '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ]).pOnly(left: 16),
+                  ),
                 ]),
               ),
               const Icon(
@@ -80,7 +89,7 @@ class DetailScreen extends GetView<DetailViewModel> {
             ]),
           ),
           HStack([
-            'Seattle, US (Remote)'
+            ((controller.job.tags ?? []).join(', '))
                 .text
                 .fontWeight(FontWeight.w700)
                 .size(22)
@@ -90,7 +99,10 @@ class DetailScreen extends GetView<DetailViewModel> {
               Icons.bookmark_outlined,
             ),
           ]).pOnly(left: 16, top: 20, right: 16),
-          'Published 9h ago on: '.text.make().pOnly(left: 16, top: 17),
+          'Published ${controller.job.getDate()}: '
+              .text
+              .make()
+              .pOnly(left: 16, top: 17),
           Image.asset(
             'assets/images/Linkedin.png',
             width: 77,
@@ -103,10 +115,10 @@ class DetailScreen extends GetView<DetailViewModel> {
               .size(22)
               .make()
               .pOnly(left: 16, top: 50),
-          'What unites all Amazonians across teams and regions is that we are all striving to delight customers and make their lives easier. Our mission drives us to seek diverse perspectives.'
+          (controller.job.content ?? '')
               .text
               .size(15)
-              .lineHeight(1.3)
+              .lineHeight(1.5)
               .make()
               .pOnly(left: 16, top: 16, right: 16),
           SizedBox(
@@ -133,7 +145,7 @@ class DetailScreen extends GetView<DetailViewModel> {
           'What unites all Amazonians across teams and regions is that we are all striving to delight customers and make their lives easier. Our mission drives us to seek diverse perspectives.'
               .text
               .size(15)
-              .lineHeight(1.3)
+              .lineHeight(1.5)
               .make()
               .pOnly(left: 16, top: 16, right: 16),
           const HeightBox(80),

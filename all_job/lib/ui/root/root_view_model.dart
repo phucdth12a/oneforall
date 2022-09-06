@@ -17,11 +17,6 @@ class RootViewModel extends GetxController {
   ];
 
   @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
   void onClose() {
     pageController.dispose();
     super.onClose();
