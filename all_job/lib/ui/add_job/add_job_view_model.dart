@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
+import '../../utils/alert/alert.dart';
 import '../../utils/api/job_api.dart';
 import '../../utils/model/api_response_list.dart';
 
@@ -53,34 +54,18 @@ class AddJobViewModel extends GetxController {
     String location = locationTextEditingController.text;
     String salary = salaryTextEditingController.text;
     if (title.isEmpty) {
-      showDialog<String>(
+      Alert.showAlert(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Please input title'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Get.back(),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+        title: 'Error',
+        content: 'Please input title',
       );
       return;
     }
     if (content.isEmpty) {
-      showDialog<String>(
+      Alert.showAlert(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Please input content'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Get.back(),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+        title: 'Error',
+        content: 'Please input content',
       );
       return;
     }
@@ -98,32 +83,19 @@ class AddJobViewModel extends GetxController {
         tags: listTagSelected);
     EasyLoading.dismiss();
     if (result.elements != null) {
-      showDialog<String>(
+      Alert.showAlert(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Success'),
-          content: const Text('Create job success'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Get.close(2),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+        title: 'Success',
+        content: 'Create job success',
+        action: () {
+          Get.close(2);
+        },
       );
     } else {
-      showDialog<String>(
+      Alert.showAlert(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Create job fail'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Get.back(),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+        title: 'Error',
+        content: 'Create job fail',
       );
     }
   }

@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen>
                 .size(13)
                 .color(Colors.black)
                 .make(),
-            'Guillem B.'
+            'Developers'
                 .text
                 .fontWeight(FontWeight.w700)
                 .size(22)

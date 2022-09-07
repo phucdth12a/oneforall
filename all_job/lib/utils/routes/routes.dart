@@ -1,3 +1,4 @@
+import 'package:all_job/ui/login_register/login_register_screen.dart';
 import 'package:get/get.dart';
 
 import '../../ui/add_job/add_job_screen.dart';
@@ -10,11 +11,13 @@ class Routes {
   static const String onboarding = '/onboarding';
   static const String detail = '/detail';
   static const String createJob = '/createJob';
+  static const String loginRegister = '/loginRegister';
 
   static List<GetPage<dynamic>> getPages = [
     GetPage(name: root, page: () => const RootScreen()),
     GetPage(name: onboarding, page: () => const OnboardingScreen()),
     GetPage(name: detail, page: () => const DetailScreen()),
     GetPage(name: createJob, page: () => const AddJobScreen()),
+    GetPage(name: loginRegister, page: () => const LoginRegisterScreen()),
   ];
 }
